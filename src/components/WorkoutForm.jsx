@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { createWorkout } from "../api/workoutApi";
+import {
+  createWorkout,
+  updateWorkout,
+  deleteWorkout
+} from "../api/workoutApi";
+
 
 export default function WorkoutForm({
   selectedWorkout,
@@ -81,15 +86,12 @@ export default function WorkoutForm({
       exercises
     };
 
-    if (isEditing && selectedWorkout) {
-      await fetch(`http://localhost:8080/api/workouts/${selectedWorkout.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-    } else {
-      await createWorkout(payload);
-    }
+if (isEditing && selectedWorkout) {
+  await updateWorkout(selectedWorkout.id, payload);
+} else {
+  await createWorkout(payload);
+}
+
 
     resetForm();
     clearSelection?.();
@@ -100,9 +102,8 @@ export default function WorkoutForm({
   async function handleDelete() {
     if (!selectedWorkout) return;
 
-    await fetch(`http://localhost:8080/api/workouts/${selectedWorkout.id}`, {
-      method: "DELETE"
-    });
+    await deleteWorkout(selectedWorkout.id);
+
 
     await refresh();
     resetForm();
