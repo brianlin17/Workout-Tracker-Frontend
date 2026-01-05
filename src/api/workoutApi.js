@@ -22,3 +22,14 @@ export async function deleteWorkout(id) {
     method: "DELETE",
   });
 }
+
+export async function updateWorkout(id, updatedWorkout) {
+  const res = await fetch(`${API_BASE}/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedWorkout),
+  });
+  return res.json();
+}
