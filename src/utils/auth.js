@@ -1,17 +1,15 @@
-const TOKEN_KEY = "jwt";
-
 export function saveToken(token) {
-  localStorage.setItem(TOKEN_KEY, token);
-}
-
-export function getToken() {
-  return localStorage.getItem(TOKEN_KEY);
+  localStorage.setItem("token", token);
 }
 
 export function logout() {
-  localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem("token");
 }
 
 export function isLoggedIn() {
-  return !!getToken();
+  return !!localStorage.getItem("token");
+}
+
+export function getToken() {
+  return localStorage.getItem("token");
 }

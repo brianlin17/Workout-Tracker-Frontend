@@ -1,19 +1,23 @@
-const API_BASE = import.meta.env.VITE_API_BASE_URL + "/auth";
+const BASE = import.meta.env.VITE_API_BASE_URL + "/auth";
 
-export async function register({ username, password }) {
-  const res = await fetch(`${API_BASE}/register`, {
+export async function login(username, password) {
+  const res = await fetch(`${BASE}/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ username, password })
   });
-  return res.json(); // will return JWT token
+
+  if (!res.ok) throw new Error("Login failed");
+
+  return res.text(); // JWT
 }
 
-export async function login({ username, password }) {
-  const res = await fetch(`${API_BASE}/login`, {
+export async function register(username, password) {
+  const res = await fetch(`${BASE}/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ username, password })
   });
-  return res.json(); // JWT token
+
+  if (!res.ok) throw new Error("Register failed");
 }
