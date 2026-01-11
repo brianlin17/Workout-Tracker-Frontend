@@ -8,7 +8,6 @@ import { AuthProvider } from "./context/AuthContext";
 import "./App.css";
 
 export default function App() {
-    <AuthProvider>
   const [authed, setAuthed] = useState(isLoggedIn());
   const [activeTab, setActiveTab] = useState("add");
   const [workouts, setWorkouts] = useState([]);
@@ -109,5 +108,4 @@ export default function App() {
       </div>
     </div>
   );
-<AuthProvider>
 }
