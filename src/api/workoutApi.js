@@ -10,7 +10,7 @@ export async function getWorkouts() {
 export async function createWorkout(workout) {
   const res = await apiFetch(API, {
     method: "POST",
-    body: JSON.stringify(workout)
+    body: JSON.stringify(workout),
   });
   return res.json();
 }
@@ -18,13 +18,13 @@ export async function createWorkout(workout) {
 export async function updateWorkout(id, workout) {
   const res = await apiFetch(`${API}/${id}`, {
     method: "PUT",
-    body: JSON.stringify(workout)
+    body: JSON.stringify(workout),
   });
   return res.json();
 }
 
 export async function deleteWorkout(id) {
   await apiFetch(`${API}/${id}`, {
-    method: "DELETE"
+    method: "DELETE",
   });
 }
