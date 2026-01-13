@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { login, register } from "../api/authApi";
 import { saveToken } from "../utils/auth";
+import "./Login.css";
 
 export default function Login({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -18,50 +19,52 @@ export default function Login({ onLogin }) {
       }
 
       const token = await login(username, password);
-      console.log("LOGIN RESPONSE:", token);
       saveToken(token);
       onLogin();
-    } catch (err) {
-      setError("Authentication failed");
+    } catch {
+      setError("Login failed");
     }
   }
 
   return (
-    <div className="login-box">
-      <h2>{isRegistering ? "Register" : "Login"}</h2>
+    <div className="login-page">
+      <h1 className="login-title autour-one-regular">
+        Brian&apos;s Workout Tracker
+      </h1>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Username"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
-          required
-        />
+      <div className="login-box">
+        <h2>{isRegistering ? "Create Account" : "Login"}</h2>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required
-        />
+        <form onSubmit={handleSubmit}>
+          <input
+            placeholder="Username"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            required
+          />
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+          />
 
-        <button type="submit">
-          {isRegistering ? "Create Account" : "Login"}
+          {error && <p className="login-error">{error}</p>}
+
+          <button type="submit">
+            {isRegistering ? "Create Account" : "Login"}
+          </button>
+        </form>
+
+        <button
+          className="login-toggle"
+          onClick={() => setIsRegistering(!isRegistering)}
+        >
+          {isRegistering ? "Back to Login" : "Create Account"}
         </button>
-      </form>
-
-      <button
-        style={{ marginTop: "1rem" }}
-        onClick={() => setIsRegistering(!isRegistering)}
-      >
-        {isRegistering
-          ? "Already have an account? Login"
-          : "New user? Register"}
-      </button>
+      </div>
     </div>
   );
 }
-
