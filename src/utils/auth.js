@@ -1,5 +1,5 @@
 export function saveToken(token) {
-  localStorage.setItem("token", jwt);
+  localStorage.setItem("token", token);
 }
 
 export function logout() {
@@ -13,5 +13,3 @@ export function isLoggedIn() {
 export function getToken() {
   return localStorage.getItem("token");
 }
-
-

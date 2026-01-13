@@ -1,24 +1,26 @@
 import { getToken } from "../utils/auth";
 
 export async function apiFetch(url, options = {}) {
-  const token = localStorage.getItem("jwt");
+  const token = localStorage.getItem("token");
 
   const headers = {
     "Content-Type": "application/json",
-    ...(token && { Authorization: `Bearer ${token}` }),
-    ...options.headers,
+    ...(token && { Authorization: `Bearer ${token}` })
   };
 
   const res = await fetch(url, {
     ...options,
-    headers,
+    headers: {
+      ...headers,
+      ...options.headers
+    }
   });
 
   if (res.status === 401 || res.status === 403) {
-    // optional: auto-logout or redirect later
     throw new Error("Unauthorized");
   }
 
   return res;
 }
+
 

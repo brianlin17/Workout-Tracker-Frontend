@@ -18,7 +18,6 @@ export default function Login({ onLogin }) {
       }
 
       const token = await login(username, password);
-       console.log("LOGIN RESPONSE:", token);
       saveToken(token);
       onLogin();
     } catch (err) {
@@ -64,5 +63,3 @@ export default function Login({ onLogin }) {
     </div>
   );
 }
-
-
