@@ -20,6 +20,7 @@ export default function Login({ onLogin }) {
       const token = await login(username, password);
       saveToken(token);
       onLogin();
+      console.log("LOGIN RESPONSE:", token);
     } catch (err) {
       setError("Authentication failed");
     }
@@ -63,3 +64,4 @@ export default function Login({ onLogin }) {
     </div>
   );
 }
+
