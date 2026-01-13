@@ -4,7 +4,6 @@ import WorkoutList from "./components/WorkoutList";
 import Login from "./components/Login";
 import { getWorkouts } from "./api/workoutApi";
 import { isLoggedIn, logout } from "./utils/auth";
-import { AuthProvider } from "./context/AuthContext";
 import "./App.css";
 
 export default function App() {
@@ -14,15 +13,8 @@ export default function App() {
   const [selectedWorkout, setSelectedWorkout] = useState(null);
 
   async function refresh() {
-    try {
-      const data = await getWorkouts();
-      setWorkouts(data);
-    } catch (err) {
-      // Token expired / invalid → force logout
-      console.error(err);
-      logout();
-      setAuthed(false);
-    }
+    const data = await getWorkouts();
+    setWorkouts(data);
   }
 
   function handleSelectWorkout(workout) {
@@ -34,31 +26,29 @@ export default function App() {
     setSelectedWorkout(null);
   }
 
-  /* 🔐 Only load workouts AFTER auth */
   useEffect(() => {
-    if (authed) {
-      refresh();
-    }
+    if (authed) refresh();
   }, [authed]);
 
-  /* 🔐 AUTH WALL */
   if (!authed) {
     return <Login onLogin={() => setAuthed(true)} />;
   }
 
   return (
     <div className="dashboard">
-      <h1>Brian's Workout Tracker</h1>
+      <div className="dashboard-header">
+        <h1 className="autour-one-regular">Brian's Workout Tracker</h1>
 
-      <button
-        style={{ marginBottom: "1rem" }}
-        onClick={() => {
-          logout();
-          setAuthed(false);
-        }}
-      >
-        Logout
-      </button>
+        <button
+          className="logout-btn"
+          onClick={() => {
+            logout();
+            setAuthed(false);
+          }}
+        >
+          Logout
+        </button>
+      </div>
 
       <div className="tabs">
         <button
@@ -81,10 +71,7 @@ export default function App() {
 
       <div className="tab-content">
         {activeTab === "add" && (
-          <WorkoutForm
-            refresh={refresh}
-            clearSelection={clearSelection}
-          />
+          <WorkoutForm refresh={refresh} clearSelection={clearSelection} />
         )}
 
         {activeTab === "saved" && (
