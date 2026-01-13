@@ -37,6 +37,7 @@ export default function Login({ onLogin }) {
 
         <form onSubmit={handleSubmit}>
           <input
+            className="login-input"
             placeholder="Username"
             value={username}
             onChange={e => setUsername(e.target.value)}
@@ -44,6 +45,7 @@ export default function Login({ onLogin }) {
           />
 
           <input
+            className="login-input"
             type="password"
             placeholder="Password"
             value={password}
@@ -53,7 +55,7 @@ export default function Login({ onLogin }) {
 
           {error && <p className="login-error">{error}</p>}
 
-          <button type="submit">
+          <button type="submit" className="login-submit">
             {isRegistering ? "Create Account" : "Login"}
           </button>
         </form>
