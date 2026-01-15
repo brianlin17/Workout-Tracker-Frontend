@@ -257,7 +257,7 @@
   cursor: pointer;
   background: #fff;
 
-  transform: translateX(-4px);
+  transform: translateX(-8px);
 
 
   transition:
@@ -271,7 +271,6 @@
 .workout-item:hover {
   background-color: #f1f5f9;
   border-color: #94a3b8;
-  transform: translateX(4px);
 }
 
 /* Selected workout */
