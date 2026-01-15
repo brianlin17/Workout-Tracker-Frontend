@@ -7,17 +7,11 @@ export default function WorkoutList({
   onSelect
 }) {
   return (
-    <div
-      style={{
-        overflowY: "auto",
-        height: "100%",
-        paddingRight: "8px"
-      }}
-    >
+    <div className="workout-list">
       <h2>Saved Workouts</h2>
 
       {workouts.length === 0 && (
-        <p style={{ opacity: 0.6 }}>
+        <p className="empty-workouts">
           No workouts saved yet.
         </p>
       )}
@@ -26,20 +20,12 @@ export default function WorkoutList({
         <div
           key={workout.id}
           onClick={() => onSelect(workout)}
-          style={{
-            border:
-              selectedWorkout?.id === workout.id
-                ? "2px solid #007bff"
-                : "1px solid #ccc",
-            padding: "12px",
-            marginBottom: "12px",
-            cursor: "pointer",
-            borderRadius: "6px",
-            background: "#fff"
-          }}
+          className={`workout-item ${
+            selectedWorkout?.id === workout.id ? "selected" : ""
+          }`}
         >
           <strong>{workout.name}</strong>
-          <div style={{ fontSize: "0.85rem", opacity: 0.7 }}>
+          <div className="workout-date">
             {workout.workoutDate}
           </div>
         </div>
@@ -47,4 +33,3 @@ export default function WorkoutList({
     </div>
   );
 }
-
