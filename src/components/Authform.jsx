@@ -39,7 +39,14 @@ export default function AuthForm() {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button type="submit">{isRegister ? "Register" : "Login"}</button>
-      <button type="button" onClick={() => setIsRegister(!isRegister)}>
+      <button
+        type="button"
+        onClick={() => {
+          setIsRegister(!isRegister);
+          setUsername("");
+          setPassword("");   
+        }}
+      >
         {isRegister ? "Already have an account?" : "Create account"}
       </button>
     </form>

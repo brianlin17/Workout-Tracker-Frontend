@@ -21,10 +21,15 @@ export default function Login({ onLogin }) {
       const token = await login(username, password);
       saveToken(token);
       onLogin();
-    } catch {
-      setError("Login failed");
+    } catch (err) {
+      if (isRegistering) {
+        setError("Invalid username or password");
+      } else {
+        setError("Login failed");
+      }
     }
   }
+
 
   return (
     <div className="login-page">
@@ -62,7 +67,12 @@ export default function Login({ onLogin }) {
 
         <button
           className="login-toggle"
-          onClick={() => setIsRegistering(!isRegistering)}
+          onClick={() => {
+            setIsRegistering(!isRegistering);
+            setUsername("");
+            setPassword("");
+            setError("");
+          }}
         >
           {isRegistering ? "Back to Login" : "Create Account"}
         </button>
