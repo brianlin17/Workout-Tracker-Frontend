@@ -180,26 +180,34 @@ if (isEditing && selectedWorkout) {
                   <label>Reps</label>
                   <input
                     type="number"
+                    min={0}
+                    step={1}
                     value={set.reps}
                     onChange={e => {
+                      const value = Math.max(0, Number(e.target.value));
                       const copy = [...exercises];
-                      copy[exIdx].sets[setIdx].reps = Number(e.target.value);
+                      copy[exIdx].sets[setIdx].reps = value;
                       setExercises(copy);
                     }}
                   />
+
                 </div>
 
                 <div className="set-input">
                   <label>Weight</label>
                   <input
                     type="number"
+                    min={0}
+                    step={0.5}
                     value={set.weight}
                     onChange={e => {
+                      const value = Math.max(0, Number(e.target.value));
                       const copy = [...exercises];
-                      copy[exIdx].sets[setIdx].weight = Number(e.target.value);
+                      copy[exIdx].sets[setIdx].weight = value;
                       setExercises(copy);
                     }}
                   />
+
                 </div>
 
                 <button
