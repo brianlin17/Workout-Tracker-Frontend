@@ -30,6 +30,10 @@
   font-weight: 400;
   font-style: normal;
 }
+.workout-list h2 {
+  margin-left: -1px;
+}
+
 
 /* ===== Tabs ===== */
 .tabs {
