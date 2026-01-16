@@ -30,18 +30,19 @@ export default function App() {
     if (authed) refresh();
   }, [authed]);
 
-  if (!authed) {
+if (!authed) {
   return (
     <Login
       onLogin={() => {
         setAuthed(true);
-        setActiveTab("add");     
-        setWorkouts([]);         
-        localStorage.removeItem("workouts"); 
+        setActiveTab("add");
+        setWorkouts([]);
+        localStorage.removeItem("workouts");
       }}
     />
   );
 }
+
 
   return (
     <div className="dashboard">

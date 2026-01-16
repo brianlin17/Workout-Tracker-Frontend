@@ -8,10 +8,13 @@ export default function Login({ onLogin }) {
   const [password, setPassword] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
       if (isRegistering) {
@@ -20,15 +23,17 @@ export default function Login({ onLogin }) {
 
       const token = await login(username, password);
       saveToken(token);
-      onLogin();
+      onLogin(); //switch to dashboard
     } catch (err) {
       if (isRegistering) {
         setError("Invalid username or password");
       } else {
         setError("Login failed");
       }
+      setLoading(false); //stop spinner on error
     }
   }
+
 
 
   return (
@@ -47,6 +52,7 @@ export default function Login({ onLogin }) {
             value={username}
             onChange={e => setUsername(e.target.value)}
             required
+            disabled={loading}
           />
 
           <input
@@ -56,17 +62,21 @@ export default function Login({ onLogin }) {
             value={password}
             onChange={e => setPassword(e.target.value)}
             required
+            disabled={loading}
           />
+
 
           {error && <p className="login-error">{error}</p>}
 
-          <button type="submit" className="login-submit">
-            {isRegistering ? "Create Account" : "Login"}
+          <button type="submit" className="login-submit" disabled={loading}>
+            {loading ? "Loading..." : isRegistering ? "Create Account" : "Login"}
           </button>
+
         </form>
 
         <button
           className="login-toggle"
+          disabled={loading}
           onClick={() => {
             setIsRegistering(!isRegistering);
             setUsername("");
@@ -76,6 +86,8 @@ export default function Login({ onLogin }) {
         >
           {isRegistering ? "Back to Login" : "Create Account"}
         </button>
+        {loading && <div className="spinner"></div>}
+
       </div>
     </div>
   );
