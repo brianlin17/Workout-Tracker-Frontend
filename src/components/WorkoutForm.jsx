@@ -63,18 +63,7 @@ export default function WorkoutForm({
     );
   }, [selectedWorkout]);
 
-    useEffect(() => {
-      if (selectedWorkout) {
-        setName(selectedWorkout.name);
-        setDate(selectedWorkout.workoutDate);
-        setExercises(
-          selectedWorkout.exercises.map(ex => ({
-            ...ex,
-            sets: ex.sets.map(s => ({ ...s }))
-          }))
-        );
-      }
-    }, [selectedWorkout]);
+
   /* -------------------- submit -------------------- */
 
   async function handleSubmit(e) {
@@ -182,14 +171,26 @@ if (isEditing && selectedWorkout) {
                     type="number"
                     min={0}
                     step={1}
-                    value={set.reps}
+                    value={set.reps === 0 ? "" : set.reps}
                     onChange={e => {
-                      const value = Math.max(0, Number(e.target.value));
+                      const raw = e.target.value;
+
+                      if (raw === "") {
+                        const copy = [...exercises];
+                        copy[exIdx].sets[setIdx].reps = 0;
+                        setExercises(copy);
+                        return;
+                      }
+
+                      // Normalize number (removes leading zeros)
+                      const value = Math.max(0, parseInt(raw, 10));
+
                       const copy = [...exercises];
                       copy[exIdx].sets[setIdx].reps = value;
                       setExercises(copy);
                     }}
                   />
+
 
                 </div>
 
@@ -199,14 +200,26 @@ if (isEditing && selectedWorkout) {
                     type="number"
                     min={0}
                     step={0.5}
-                    value={set.weight}
+                    value={set.weight === 0 ? "" : set.weight}
                     onChange={e => {
-                      const value = Math.max(0, Number(e.target.value));
+                      const raw = e.target.value;
+
+                      if (raw === "") {
+                        const copy = [...exercises];
+                        copy[exIdx].sets[setIdx].weight = 0;
+                        setExercises(copy);
+                        return;
+                      }
+
+                      // Normalize number (removes leading zeros)
+                      const value = Math.max(0, Number(raw));
+
                       const copy = [...exercises];
                       copy[exIdx].sets[setIdx].weight = value;
                       setExercises(copy);
                     }}
                   />
+
 
                 </div>
 
