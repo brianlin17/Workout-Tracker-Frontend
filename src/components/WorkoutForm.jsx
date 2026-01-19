@@ -35,9 +35,10 @@ export default function WorkoutForm({
 
   function addSet(exIdx) {
     const copy = [...exercises];
-    copy[exIdx].sets.push({ reps: 0, weight: 0 });
+    copy[exIdx].sets.push({ reps: 0, weight: "0" });
     setExercises(copy);
   }
+
 
   function deleteSet(exIdx, setIdx) {
     const copy = [...exercises];
@@ -72,8 +73,15 @@ export default function WorkoutForm({
     const payload = {
       name,
       workoutDate: date,
-      exercises
+      exercises: exercises.map(ex => ({
+        ...ex,
+        sets: ex.sets.map(s => ({
+          reps: s.reps,
+          weight: Number(s.weight)
+        }))
+      }))
     };
+
 
 if (isEditing && selectedWorkout) {
   await updateWorkout(selectedWorkout.id, payload);
@@ -210,7 +218,7 @@ if (isEditing && selectedWorkout) {
                   <input
                     type="text"
                     inputMode="decimal"
-                    value={String(set.weight)}
+                    value={set.weight}
                     onKeyDown={e => {
                       if (e.key === "-" || e.key === "e") {
                         e.preventDefault();
@@ -218,23 +226,29 @@ if (isEditing && selectedWorkout) {
                     }}
                     onChange={e => {
                       let raw = e.target.value;
-                  
-                      // Allow digits + decimal only
+
+                      // Allow digits and ONE decimal point
                       raw = raw.replace(/[^0-9.]/g, "");
-                  
-                      // Allow only ONE decimal point
+
                       const parts = raw.split(".");
                       if (parts.length > 2) {
                         raw = parts[0] + "." + parts.slice(1).join("");
                       }
-                  
-                      // Remove leading zeros unless "0.x"
-                      if (raw.length > 1 && !raw.startsWith("0.")) {
+
+                      // Remove leading zeros unless "0" or "0.x"
+                      if (raw.length > 1 && !raw.startsWith("0.") && !raw.startsWith("0")) {
                         raw = raw.replace(/^0+/, "");
                       }
-                  
-                      const value = raw === "" ? 0 : Number(raw);
-                  
+
+                      if (raw.endsWith(".")) {
+                        const copy = [...exercises];
+                        copy[exIdx].sets[setIdx].weight = raw;
+                        setExercises(copy);
+                        return;
+                      }
+
+                      const value = raw === "" ? "0" : String(Number(raw));
+
                       const copy = [...exercises];
                       copy[exIdx].sets[setIdx].weight = value;
                       setExercises(copy);
