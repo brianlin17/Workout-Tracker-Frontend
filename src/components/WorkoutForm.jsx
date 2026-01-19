@@ -168,22 +168,27 @@ if (isEditing && selectedWorkout) {
                 <div className="set-input">
                   <label>Reps</label>
                   <input
-                    type="number"
-                    min={0}
-                    step={1}
-                    value={set.reps}
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    value={String(set.reps)}
                     onKeyDown={e => {
-                      if (e.key === "-") e.preventDefault();
+                      if (e.key === "-" || e.key === "." || e.key === "e") {
+                        e.preventDefault();
+                      }
                     }}
                     onChange={e => {
                       let raw = e.target.value;
 
-                      // Remove leading zeros unless the value is exactly 0
+                      // Remove non-digits
+                      raw = raw.replace(/\D/g, "");
+
+                      // Remove leading zeros unless exactly 0
                       if (raw.length > 1) {
                         raw = raw.replace(/^0+/, "");
                       }
 
-                      const value = raw === "" ? 0 : Math.max(0, Number(raw));
+                      const value = raw === "" ? 0 : Number(raw);
 
                       const copy = [...exercises];
                       copy[exIdx].sets[setIdx].reps = value;
@@ -195,32 +200,45 @@ if (isEditing && selectedWorkout) {
 
 
 
+
                 </div>
 
                 <div className="set-input">
                   <label>Weight</label>
                   <input
-                    type="number"
-                    min={0}
-                    step={0.5}
-                    value={set.weight}
+                    type="text"
+                    inputMode="decimal"
+                    value={String(set.weight)}
                     onKeyDown={e => {
-                      if (e.key === "-") e.preventDefault();
+                      if (e.key === "-" || e.key === "e") {
+                        e.preventDefault();
+                      }
                     }}
                     onChange={e => {
                       let raw = e.target.value;
 
+                      // Allow only digits + one decimal
+                      raw = raw.replace(/[^0-9.]/g, "");
+                  
+                      // Prevent multiple decimals
+                      const parts = raw.split(".");
+                      if (parts.length > 2) {
+                        raw = parts[0] + "." + parts.slice(1).join("");
+                      }
+
+                      // Remove leading zeros unless "0.x"
                       if (raw.length > 1 && !raw.startsWith("0.")) {
                         raw = raw.replace(/^0+/, "");
                       }
 
-                      const value = raw === "" ? 0 : Math.max(0, Number(raw));
+                      const value = raw === "" ? 0 : Number(raw);
 
                       const copy = [...exercises];
                       copy[exIdx].sets[setIdx].weight = value;
                       setExercises(copy);
                     }}
                   />
+
 
 
 
