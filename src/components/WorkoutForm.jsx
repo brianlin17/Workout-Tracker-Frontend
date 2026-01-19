@@ -173,17 +173,17 @@ if (isEditing && selectedWorkout) {
                     pattern="[0-9]*"
                     value={String(set.reps)}
                     onKeyDown={e => {
-                      if (e.key === "-" || e.key === "." || e.key === "e") {
+                      if (["-", ".", "e"].includes(e.key)) {
                         e.preventDefault();
                       }
                     }}
                     onChange={e => {
                       let raw = e.target.value;
 
-                      // Remove non-digits
+                      // Digits only
                       raw = raw.replace(/\D/g, "");
 
-                      // Remove leading zeros unless exactly 0
+                      // Remove leading zeros unless exactly "0"
                       if (raw.length > 1) {
                         raw = raw.replace(/^0+/, "");
                       }
@@ -195,6 +195,8 @@ if (isEditing && selectedWorkout) {
                       setExercises(copy);
                     }}
                   />
+
+
 
 
 
@@ -216,28 +218,29 @@ if (isEditing && selectedWorkout) {
                     }}
                     onChange={e => {
                       let raw = e.target.value;
-
-                      // Allow only digits + one decimal
+                  
+                      // Allow digits + decimal only
                       raw = raw.replace(/[^0-9.]/g, "");
                   
-                      // Prevent multiple decimals
+                      // Allow only ONE decimal point
                       const parts = raw.split(".");
                       if (parts.length > 2) {
                         raw = parts[0] + "." + parts.slice(1).join("");
                       }
-
+                  
                       // Remove leading zeros unless "0.x"
                       if (raw.length > 1 && !raw.startsWith("0.")) {
                         raw = raw.replace(/^0+/, "");
                       }
-
+                  
                       const value = raw === "" ? 0 : Number(raw);
-
+                  
                       const copy = [...exercises];
                       copy[exIdx].sets[setIdx].weight = value;
                       setExercises(copy);
                     }}
                   />
+
 
 
 
