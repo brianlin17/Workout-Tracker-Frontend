@@ -176,16 +176,17 @@ if (isEditing && selectedWorkout) {
                       if (e.key === "-") e.preventDefault();
                     }}
                     onChange={e => {
-                      const raw = e.target.value;
-
-                      const value =
-                        raw === "" ? 0 : Math.max(0, parseInt(raw, 10));
+                      const normalized = Math.max(
+                        0,
+                        parseInt(e.target.value || "0", 10)
+                      );
 
                       const copy = [...exercises];
-                      copy[exIdx].sets[setIdx].reps = value;
+                      copy[exIdx].sets[setIdx].reps = normalized;
                       setExercises(copy);
                     }}
                   />
+
 
 
 
@@ -202,16 +203,17 @@ if (isEditing && selectedWorkout) {
                       if (e.key === "-") e.preventDefault();
                     }}
                     onChange={e => {
-                      const raw = e.target.value;
-
-                      const value =
-                        raw === "" ? 0 : Math.max(0, Number(raw));
+                      const normalized = Math.max(
+                        0,
+                        Number(e.target.value || 0)
+                      );
 
                       const copy = [...exercises];
-                      copy[exIdx].sets[setIdx].weight = value;
+                      copy[exIdx].sets[setIdx].weight = normalized;
                       setExercises(copy);
                     }}
                   />
+
 
 
 
