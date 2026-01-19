@@ -171,25 +171,22 @@ if (isEditing && selectedWorkout) {
                     type="number"
                     min={0}
                     step={1}
-                    value={set.reps === 0 ? "" : set.reps}
+                    value={set.reps}
+                    onKeyDown={e => {
+                      if (e.key === "-") e.preventDefault();
+                    }}
                     onChange={e => {
                       const raw = e.target.value;
 
-                      if (raw === "") {
-                        const copy = [...exercises];
-                        copy[exIdx].sets[setIdx].reps = 0;
-                        setExercises(copy);
-                        return;
-                      }
-
-                      // Normalize number (removes leading zeros)
-                      const value = Math.max(0, parseInt(raw, 10));
+                      const value =
+                        raw === "" ? 0 : Math.max(0, parseInt(raw, 10));
 
                       const copy = [...exercises];
                       copy[exIdx].sets[setIdx].reps = value;
                       setExercises(copy);
                     }}
                   />
+
 
 
                 </div>
@@ -200,25 +197,22 @@ if (isEditing && selectedWorkout) {
                     type="number"
                     min={0}
                     step={0.5}
-                    value={set.weight === 0 ? "" : set.weight}
+                    value={set.weight}
+                    onKeyDown={e => {
+                      if (e.key === "-") e.preventDefault();
+                    }}
                     onChange={e => {
                       const raw = e.target.value;
 
-                      if (raw === "") {
-                        const copy = [...exercises];
-                        copy[exIdx].sets[setIdx].weight = 0;
-                        setExercises(copy);
-                        return;
-                      }
-
-                      // Normalize number (removes leading zeros)
-                      const value = Math.max(0, Number(raw));
+                      const value =
+                        raw === "" ? 0 : Math.max(0, Number(raw));
 
                       const copy = [...exercises];
                       copy[exIdx].sets[setIdx].weight = value;
                       setExercises(copy);
                     }}
                   />
+
 
 
                 </div>
