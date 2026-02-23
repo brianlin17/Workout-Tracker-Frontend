@@ -10,10 +10,24 @@ export default function Login({ onLogin }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
+
+     if (!username && !password) {
+        setError("Please enter username and password");
+        return;
+      }
+
+      if (!username) {
+        setError("Please enter username");
+        return;
+      }
+
+      if (!password) {
+        setError("Please enter password");
+        return;
+      }
     setLoading(true);
 
     try {
@@ -23,72 +37,72 @@ export default function Login({ onLogin }) {
 
       const token = await login(username, password);
       saveToken(token);
-      onLogin(); //switch to dashboard
+      onLogin();
     } catch (err) {
-      if (isRegistering) {
-        setError("Invalid username or password");
-      } else {
-        setError("Login failed");
-      }
-      setLoading(false); //stop spinner on error
+      setError(isRegistering ? "Invalid username or password" : "Login failed");
+      setLoading(false);
     }
   }
 
-
-
   return (
-    <div className="login-page">
-      <h1 className="login-title autour-one-regular">
-        Brian&apos;s Workout Tracker
-      </h1>
+    <div className="login-container">
 
-      <div className="login-box">
-        <h2>{isRegistering ? "Create Account" : "Login"}</h2>
+      {/* LEFT SIDE FORM */}
+      <div className="login-left">
+          <div className="login-side-header">
+              <h1>Brian's Workout Tracker</h1>
+            </div>
+        <h2 className="login-title">
+          {isRegistering ? "Create Account" : "Log In"}
+        </h2>
 
-        <form onSubmit={handleSubmit}>
-          <input
-            className="login-input"
-            placeholder="Username"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-            required
+        <div className="login-box">
+
+          <form onSubmit={handleSubmit} noValidate>
+            <input
+              className="login-input"
+              placeholder="Username"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              disabled={loading}
+            />
+
+            <input
+              className="login-input"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              disabled={loading}
+            />
+
+            {error && <p className="login-error">{error}</p>}
+
+            <button type="submit" className="login-submit" disabled={loading}>
+              {loading ? "Loading..." : isRegistering ? "Create Account" : "Login"}
+            </button>
+          </form>
+
+          <button
+            className="login-toggle"
             disabled={loading}
-          />
-
-          <input
-            className="login-input"
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-            disabled={loading}
-          />
-
-
-          {error && <p className="login-error">{error}</p>}
-
-          <button type="submit" className="login-submit" disabled={loading}>
-            {loading ? "Loading..." : isRegistering ? "Create Account" : "Login"}
+            onClick={() => {
+              setIsRegistering(!isRegistering);
+              setUsername("");
+              setPassword("");
+              setError("");
+            }}
+          >
+            {isRegistering ? "Back to Login" : "Create Account"}
           </button>
 
-        </form>
-
-        <button
-          className="login-toggle"
-          disabled={loading}
-          onClick={() => {
-            setIsRegistering(!isRegistering);
-            setUsername("");
-            setPassword("");
-            setError("");
-          }}
-        >
-          {isRegistering ? "Back to Login" : "Create Account"}
-        </button>
-        {loading && <div className="spinner"></div>}
+          {loading && <div className="spinner"></div>}
+        </div>
 
       </div>
+            {/* RIGHT SIDE IMAGE */}
+            <div className="login-image">
+            </div>
     </div>
   );
 }

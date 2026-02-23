@@ -1,32 +1,101 @@
-.login-page {
-  min-height: 100vh;
+/* Wrapper so banner + split layout stack vertically */
+/*.login-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+*//* Top banner *//*
+.login-banner {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+
+background: linear-gradient(
+  135deg,
+  #333333,
+  #222222
+);
+
+  color: #faf0e6;
+
+  border-bottom: 1px solid #2a2a2a;
+}*/
+
+/* SPLIT SCREEN CONTAINER */
+.login-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+/* RIGHT IMAGE SIDE */
+.login-image {
+  flex: 1;
+  background-image: url("/blurgym.png"); /* put image in public folder */
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+
+/* LEFT SIDE */
+.login-left {
+  position: relative;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 1.5rem;
-  background: #fdfbf9;
+  padding: 2rem;
+
+  /* Matte black gradient */
+  background: linear-gradient(
+    135deg,
+    #1a1a1a,
+    #0f0f0f
+  );
+
+  color: #faf0e6;
+}
+.login-side-header {
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  font-size: 0.75rem;
+    color: #faf0e6;
+    margin: 0;
+    font-weight: bold;
 }
 
-/* Header */
+/* Title */
 .login-title {
   font-size: 2.25rem;
-  color: #2f2f31;
+  color: #faf0e6;
   margin: 0;
+  font-weight: bold;
 }
 
 /* Login card */
 .login-box {
   width: 100%;
-  max-width: 520px; /* match dashboard max width */
-  background: white;
+  max-width: 520px;
+  background: #181818; /* deep matte black */
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  border: 1px solid #2a2a2a; /* subtle edge definition */
 }
 
 .login-box h2 {
@@ -34,15 +103,18 @@
   text-align: center;
 }
 
-/* Inputs stretch full width */
+/* Inputs */
 .login-input {
   width: 100%;
   padding: 0.8rem 1rem;
   border-radius: 8px;
-  border: 1px solid #cbd5e1;
+  background: #121212;
+  border: 1px solid #faf0e6;
+  color: ##faf0e6;
   font-size: 1rem;
-  margin-bottom: 1rem; /* space below password input */
+  margin-bottom: 1rem;
   box-sizing: border-box;
+
 }
 
 /* Submit button */
@@ -52,36 +124,50 @@
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  background: #2563eb;
-  color: white;
+  background: linear-gradient(
+    135deg,
+    #ff6a00,
+    #ff2e00
+  );
+  color: #faf0e6;
   font-size: 1rem;
   transition: background 0.2s ease;
 }
 
 .login-submit:hover {
-  background: #1d4ed8;
+    background: linear-gradient(
+      135deg,
+      #ff7a1a,
+      #ff3b1a
+    );
 }
 
-/* Toggle button below submit */
+/* Toggle */
 .login-toggle {
   background: none;
   border: none;
-  color: #2563eb;
+  color: #faf0e6;
   cursor: pointer;
   font-size: 0.9rem;
   margin-top: 0.5rem;
+}
+
+.login-toggle:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 .login-toggle:hover {
   text-decoration: underline;
 }
 
-/* Error message */
+/* Error */
 .login-error {
   color: #dc2626;
   font-size: 0.85rem;
   text-align: center;
 }
+
 /* Spinner */
 .spinner {
   width: 32px;
@@ -96,5 +182,20 @@
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .login-container {
+    flex-direction: column;
+  }
+
+  .login-image {
+    height: 35vh;
+  }
+
+  .login-right {
+    height: 65vh;
   }
 }
