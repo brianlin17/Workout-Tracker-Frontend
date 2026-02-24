@@ -275,21 +275,32 @@ if (isEditing && selectedWorkout) {
           </div>
 
 
-          <button type="button" onClick={() => addSet(exIdx)}>
-            + Add Set
+          <button
+            type="button"
+            className="gradient-btn"
+            onClick={() => addSet(exIdx)}
+          >
+            +Add Set
           </button>
         </div>
       ))}
 
-      <button type="button" onClick={addExercise}>
-        + Add Exercise
-      </button>
+    <button
+      type="button"
+      className="gradient-btn"
+      onClick={addExercise}
+    >
+        +Add Exercise
+    </button>
 
       <br /><br />
 
-      <button type="submit">
-        {selectedWorkout ? "Update Workout" : "Save Workout"}
-      </button>
+     <button
+       type="submit"
+       className="gradient-btn"
+     >
+       {selectedWorkout ? "Update Workout" : "Save Workout"}
+     </button>
 
 {/*         {isEditing && (
           <button
@@ -317,6 +328,7 @@ if (isEditing && selectedWorkout) {
 
           <button
             type="button"
+            className="gradient-btn"
             onClick={resetForm}
             style={{ marginLeft: "10px" }}
           >
