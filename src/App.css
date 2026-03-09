@@ -4,7 +4,9 @@
   margin: 0;
   padding: 0;
 }
-
+body {
+  color: #faf0e6;
+}
 /* ===== Main dashboard container ===== */
 .dashboard {
     position: relative;
@@ -21,7 +23,6 @@
       #1a1a1a,
       #0f0f0f
     );
-  color: #faf0e6;
 }
 
 /* ===== Header ===== */
