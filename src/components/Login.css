@@ -1,48 +1,19 @@
-/* Wrapper so banner + split layout stack vertically */
-/*.login-page-wrapper {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-*//* Top banner *//*
-.login-banner {
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-
-background: linear-gradient(
-  135deg,
-  #333333,
-  #222222
-);
-
-  color: #faf0e6;
-
-  border-bottom: 1px solid #2a2a2a;
-}*/
-
 /* SPLIT SCREEN CONTAINER */
 .login-container {
   display: flex;
-  height: 100vh;
+  min-height: 100dvh; /* fixes mobile safari viewport issues */
   width: 100%;
+  overflow-x: hidden;
 }
 
 /* RIGHT IMAGE SIDE */
 .login-image {
   flex: 1;
-  background-image: url("/blurgym.png"); /* put image in public folder */
+  background-image: url("/blurgym.png");
   background-size: cover;
   background-position: center;
   position: relative;
 }
-
 
 /* LEFT SIDE */
 .login-left {
@@ -55,7 +26,6 @@ background: linear-gradient(
   gap: 1.5rem;
   padding: 2rem;
 
-  /* Matte black gradient */
   background: linear-gradient(
     135deg,
     #1a1a1a,
@@ -64,14 +34,16 @@ background: linear-gradient(
 
   color: #faf0e6;
 }
+
+/* header */
 .login-side-header {
   position: absolute;
   top: 30px;
   left: 40px;
   font-size: 0.75rem;
-    color: #faf0e6;
-    margin: 0;
-    font-weight: bold;
+  color: #faf0e6;
+  margin: 0;
+  font-weight: bold;
 }
 
 /* Title */
@@ -86,16 +58,16 @@ background: linear-gradient(
 .login-box {
   width: 100%;
   max-width: 520px;
-  background: #181818; /* deep matte black */
+  background: #181818;
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
 
   display: flex;
   flex-direction: column;
   gap: 1rem;
 
-  border: 1px solid #2a2a2a; /* subtle edge definition */
+  border: 1px solid #2a2a2a;
 }
 
 .login-box h2 {
@@ -110,11 +82,10 @@ background: linear-gradient(
   border-radius: 8px;
   background: #121212;
   border: 1px solid #faf0e6;
-  color: ##faf0e6;
+  color: #faf0e6; /* fixed typo */
   font-size: 1rem;
   margin-bottom: 1rem;
   box-sizing: border-box;
-
 }
 
 /* Submit button */
@@ -135,11 +106,11 @@ background: linear-gradient(
 }
 
 .login-submit:hover {
-    background: linear-gradient(
-      135deg,
-      #ff7a1a,
-      #ff3b1a
-    );
+  background: linear-gradient(
+    135deg,
+    #ff7a1a,
+    #ff3b1a
+  );
 }
 
 /* Toggle */
@@ -150,11 +121,6 @@ background: linear-gradient(
   cursor: pointer;
   font-size: 0.9rem;
   margin-top: 0.5rem;
-}
-
-.login-toggle:focus {
-  outline: none;
-  box-shadow: none;
 }
 
 .login-toggle:hover {
@@ -185,17 +151,28 @@ background: linear-gradient(
   }
 }
 
-/* RESPONSIVE */
+/* MOBILE */
 @media (max-width: 900px) {
+
   .login-container {
     flex-direction: column;
   }
 
   .login-image {
     height: 35vh;
+    flex: none;
   }
 
-  .login-right {
-    height: 65vh;
+  .login-left {
+    flex: none;
+    padding: 2rem 1.5rem;
+  }
+
+  .login-box {
+    max-width: 100%;
+  }
+
+  .login-side-header {
+    left: 20px;
   }
 }
