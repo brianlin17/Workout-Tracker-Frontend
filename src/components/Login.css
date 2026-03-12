@@ -172,7 +172,11 @@
     max-width: 100%;
   }
 
-  .login-side-header {
+   .login-side-header {
+    position: absolute;
+    top: 16px;
     left: 20px;
+    font-size: 0.8rem;
   }
 }
+
